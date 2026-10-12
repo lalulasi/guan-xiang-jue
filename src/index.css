@@ -1,20 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Source+Han+Sans+SC:wght@400;500;600&display=swap');
-
 :root {
-  font-family: 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
-  color: #252923;
-  background: #edece5;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  color: #202522;
+  background: #f1f2ee;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --ink: #252923;
-  --muted: #70736b;
-  --paper: #f7f5ed;
-  --paper-deep: #e4e1d5;
-  --jade: #24594f;
-  --jade-deep: #173d37;
-  --cinnabar: #a74432;
-  --line: #d2cec0;
+  --serif: 'Songti SC', SimSun, 'Noto Serif CJK SC', serif;
+  --ink: #202522;
+  --muted: #666d68;
+  --paper: #fbfbf8;
+  --paper-deep: #eef0eb;
+  --jade: #246457;
+  --jade-deep: #143f37;
+  --cinnabar: #a34532;
+  --line: #d9ddd6;
 }
 
 * {

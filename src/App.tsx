@@ -2,12 +2,11 @@ import { useState } from 'react'
 import {
   ArrowDown,
   ArrowLeft,
-  BookOpen,
   ChevronDown,
   CircleHelp,
-  Compass,
+  Hash,
   RotateCcw,
-  Sparkles,
+  WandSparkles,
 } from 'lucide-react'
 import './App.css'
 import {
@@ -16,7 +15,6 @@ import {
   type Reading,
 } from './lib/divination'
 
-const EXAMPLES = ['27', '105', '863', '2026']
 const CURRENT_YEAR = new Date().getFullYear()
 
 function HexagramLines({
@@ -66,72 +64,62 @@ function InputStep({
   return (
     <main className="reading-shell input-state">
       <section className="intro">
-        <div className="seal" aria-hidden="true">象</div>
-        <p className="eyebrow">借物取数 · 观象自省</p>
-        <h1>心有所问，<br />借一数观其变。</h1>
+        <p className="eyebrow">数字起卦 · 决策参考</p>
+        <h1>观象决</h1>
         <p className="intro-copy">
-          不必硬猜，也不必反复挑选。记下此刻第一眼看见的数字，
-          让卦象帮你换一个角度审视选择。
+          拿不定主意时，输入此刻第一眼看见的数字。
+          用一份清楚、可解释的卦象提示，换个角度审视选择。
         </p>
-        <div className="principle">
-          <Compass size={18} strokeWidth={1.6} />
-          <span>第一眼为准</span>
-          <i />
-          <span>不挑，不换</span>
+        <div className="how-it-works" aria-label="使用步骤">
+          <span><b>1</b>心中定一事</span>
+          <span><b>2</b>取第一眼数字</span>
+          <span><b>3</b>查看行动提示</span>
         </div>
       </section>
 
       <section className="casting-panel" aria-labelledby="casting-title">
-        <div className="step-mark">
-          <span>壹</span>
-          <div />
-          <p>静心取数</p>
+        <div className="panel-heading">
+          <span>现在开始</span>
+          <h2 id="casting-title">你在为什么事犹豫？</h2>
         </div>
-        <h2 id="casting-title">你正在为什么事拿不定主意？</h2>
         <label className="field">
-          <span>所问之事 <small>选填</small></span>
+          <span>想问的事 <small>选填</small></span>
           <textarea
             value={question}
             onChange={(event) => onQuestion(event.target.value)}
             maxLength={80}
-            placeholder="例如：我是否应该接受这份新的工作？"
+            placeholder="例如：我是否应该接受这份工作？"
             rows={2}
           />
           <em>{question.length}/80</em>
         </label>
 
         <label className="field number-field">
-          <span>第一眼数字</span>
-          <input
-            value={number}
-            onChange={(event) => onNumber(event.target.value.replace(/[^\d]/g, '').slice(0, 18))}
-            inputMode="numeric"
-            autoComplete="off"
-            placeholder="任意数字"
-            aria-describedby={error ? 'number-error' : 'number-hint'}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') onCast()
-            }}
-          />
-          <p id="number-hint">页码、电量、时间、门牌……只取最先入眼的那个。</p>
+          <span>第一眼看到的数字</span>
+          <div className="number-input">
+            <Hash size={24} aria-hidden="true" />
+            <input
+              value={number}
+              onChange={(event) => onNumber(event.target.value.replace(/[^\d]/g, '').slice(0, 18))}
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="例如 35"
+              aria-describedby={error ? 'number-error' : 'number-hint'}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') onCast()
+              }}
+            />
+          </div>
+          <p id="number-hint">可以是时间、电量、页码或门牌。第一眼为准，不挑不换。</p>
           {error && <strong id="number-error" role="alert">{error}</strong>}
         </label>
 
-        <div className="quick-numbers" aria-label="示例数字">
-          <span>试一个</span>
-          {EXAMPLES.map((example) => (
-            <button key={example} type="button" onClick={() => onNumber(example)}>
-              {example}
-            </button>
-          ))}
-        </div>
-
         <button type="button" className="cast-button" onClick={onCast}>
-          <Sparkles size={18} />
-          开始起卦
+          <WandSparkles size={19} />
+          查看卦象提示
         </button>
         <p className="disclaimer">
-          结果用于自我观察与决策反思，不构成医疗、法律或财务建议。
+          仅用于文化体验和决策反思，不代替专业意见。
         </p>
       </section>
     </main>
@@ -164,14 +152,23 @@ function ResultStep({
 
       <header className="result-header">
         <div>
-          <p className="eyebrow">{dateText} · 数字 {reading.input}</p>
+          <p className="eyebrow">本次所问 · {dateText}</p>
           <h1>{question || '此刻心中所问'}</h1>
         </div>
+        <span className="source-number">取数 {reading.input}</span>
+      </header>
+
+      <section className="verdict-summary" aria-label="行动结论">
         <div className={`verdict verdict-${reading.tendency}`}>
-          <span>行动提示</span>
+          <span>行动倾向</span>
           <strong>{reading.tendency}</strong>
         </div>
-      </header>
+        <div>
+          <p>先看结论</p>
+          <h2>{reading.tendencyNote}</h2>
+          <span>{reading.primary.action}</span>
+        </div>
+      </section>
 
       <section className="reading-stage" aria-label="卦象结果">
         <div className="hexagram-visual">
@@ -190,13 +187,8 @@ function ResultStep({
 
         <div className="reading-interpretation">
           <div className="judgement">
-            <p>此刻之象</p>
+            <p>主卦解读</p>
             <blockquote>{reading.primary.insight}</blockquote>
-          </div>
-          <div className="action-guidance">
-            <span>给你的提示</span>
-            <h3>{reading.tendencyNote}</h3>
-            <p>{reading.primary.action}</p>
           </div>
           <div className="changing">
             <div>
@@ -212,10 +204,10 @@ function ResultStep({
 
       <section className="reflection">
         <div className="section-title">
-          <span>贰</span>
+          <span>问</span>
           <div>
-            <p>落到现实</p>
-            <h2>卦是镜子，决定仍由你来做</h2>
+            <p>落回现实</p>
+            <h2>做决定前，再问自己三件事</h2>
           </div>
         </div>
         <div className="reflection-grid">
@@ -298,8 +290,7 @@ function App() {
           </div>
         </a>
         <div className="nav-note">
-          <BookOpen size={16} />
-          <span>取象于物，观心于己</span>
+          <span>取数 · 起卦 · 决策提示</span>
         </div>
       </nav>
 

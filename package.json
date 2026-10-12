@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:cdn": "tsc -b && vite build --base=./ --outDir=site",
     "lint": "oxlint",
     "test": "vitest run",
     "preview": "vite preview"
