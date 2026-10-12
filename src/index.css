@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Source+Han+Sans+SC:wght@400;500;600&display=swap');
+
+:root {
+  font-family: 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
+  color: #252923;
+  background: #edece5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #252923;
+  --muted: #70736b;
+  --paper: #f7f5ed;
+  --paper-deep: #e4e1d5;
+  --jade: #24594f;
+  --jade-deep: #173d37;
+  --cinnabar: #a74432;
+  --line: #d2cec0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--cinnabar);
+  outline-offset: 3px;
+}
