@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:cdn": "tsc -b && vite build --base=./ --outDir=site",
-    "lint": "oxlint",
+    "lint": "oxlint src",
     "test": "vitest run",
     "preview": "vite preview"
   },
